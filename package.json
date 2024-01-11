@@ -1,7 +1,7 @@
 {
-  "name": "vue-signature-pad",
-  "description": "SignaturePad component for Vue.js",
-  "version": "2.0.5",
+  "name": "vue-signature-pad-trim",
+  "description": "基于vue-signature-pad的签名组件，支持trim功能",
+  "version": "1.0.0",
   "main": "dist/vue-signature-pad.ssr.js",
   "unpkg": "dist/vue-signature-pad.min.js",
   "module": "dist/vue-signature-pad.esm.js",
@@ -53,22 +53,16 @@
       "eslint --fix"
     ]
   },
-  "author": "Peng Jie <bivinity.pengzjie@gmail.com> (https://github.com/neighborhood999)",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/neighborhood999/vue-signature-pad.git"
-  },
+  "author": "morningStar",
   "keywords": [
     "vue",
     "signature",
     "component"
   ],
-  "bugs": {
-    "url": "https://github.com/neighborhood999/vue-signature-pad/issues"
-  },
   "dependencies": {
     "merge-images": "^1.1.0",
     "signature_pad": "^3.0.0-beta.3",
+    "trim-canvas": "^0.1.2",
     "vue": "^2.6.14"
   },
   "devDependencies": {

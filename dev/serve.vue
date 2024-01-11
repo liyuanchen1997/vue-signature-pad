@@ -15,6 +15,11 @@ export default Vue.extend({
       const { isEmpty, data } = this.$refs.signaturePad.saveSignature();
       console.log(isEmpty);
       console.log(data);
+    },
+    Savetrim() {
+      const { isEmpty, data } = this.$refs.signaturePad.saveSignatureTrim();
+      console.log(isEmpty);
+      console.log(data);
     }
   }
 });
@@ -30,6 +35,7 @@ export default Vue.extend({
     />
     <div id="buttons">
       <button @click="save">Save</button>
+      <button @click="Savetrim">Savetrim</button>
       <button @click="undo">Undo</button>
     </div>
   </div>

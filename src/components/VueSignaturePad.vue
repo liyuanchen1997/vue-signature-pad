@@ -1,6 +1,7 @@
 <script>
 import SignaturePad from 'signature_pad';
 import mergeImages from 'merge-images';
+import trimCanvas from 'trim-canvas';
 import {
   DEFAULT_OPTIONS,
   TRANSPARENT_PNG,
@@ -72,7 +73,6 @@ export default {
       ...options
     });
     this.signaturePad = signaturePad;
-
     if (options.resizeHandler) {
       this.resizeCanvas = options.resizeHandler.bind(this);
     }
@@ -105,6 +105,40 @@ export default {
       this.signaturePad.clear();
       this.signatureData = TRANSPARENT_PNG;
       this.signaturePad.fromData(data);
+    },
+
+    saveSignatureTrim(type = IMAGE_TYPES[0], encoderOptions) {
+      const { signaturePad, options } = this;
+      const status = { isEmpty: false, data: undefined };
+
+      if (!checkSaveType(type)) {
+        const imageTypesString = IMAGE_TYPES.join(', ');
+        throw new Error(
+          `The Image type is incorrect! We are support ${imageTypesString} types.`
+        );
+      }
+
+      if (signaturePad.isEmpty()) {
+        return {
+          ...status,
+          isEmpty: true
+        };
+      } else {
+        // 创建新的 canvas 元素并设置相同属性
+        const clonedCanvas = document.createElement('canvas');
+        clonedCanvas.width = signaturePad.canvas.width;
+        clonedCanvas.height = signaturePad.canvas.height;
+        // 将原始 canvas 上下文对象克隆到新的 canvas 上
+        const context = signaturePad.canvas.getContext('2d');
+        const clonedContext = clonedCanvas.getContext('2d');
+        clonedContext.drawImage(context.canvas, 0, 0);
+        const nowCanvas = trimCanvas(clonedCanvas);
+        this.signatureData = nowCanvas.toDataURL(type, encoderOptions);
+        return {
+          ...status,
+          data: this.signatureData
+        };
+      }
     },
 
     saveSignature(type = IMAGE_TYPES[0], encoderOptions) {
